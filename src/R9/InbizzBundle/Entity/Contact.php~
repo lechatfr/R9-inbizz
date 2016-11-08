@@ -1,0 +1,582 @@
+<?php
+
+namespace R9\InbizzBundle\Entity;
+
+use R9\UserBundle\Entity\User;
+use R9\InbizzBundle\Entity\Marque;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Contact
+ *
+ * @ORM\Table(name="r9_contact")
+ * @ORM\Entity(repositoryClass="R9\InbizzBundle\Repository\ContactRepository")
+ */
+class Contact
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="R9\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="R9\InbizzBundle\Entity\Marque", inversedBy="contacts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $marque;
+    
+    /**
+    * @ORM\ManyToMany(targetEntity="R9\InbizzBundle\Entity\Contactprojet")
+    */
+    private $projets;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="typecontact", type="string", length=10)
+     */
+    private $typecontact;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="civilite", type="string", length=10, nullable=true)
+     */
+    private $civilite;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenom", type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tel", type="string", length=255, nullable=true)
+     */
+    private $tel;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mobile", type="string", length=255, nullable=true)
+     */
+    private $mobile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fax", type="string", length=255, nullable=true)
+     */
+    private $fax;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="statut", type="string", length=20, nullable=true)
+     */
+    private $statut;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fonction", type="string", length=255, nullable=true)
+     */
+    private $fonction;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service", type="string", length=255, nullable=true)
+     */
+    private $service;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pouvoir", type="string", length=255, nullable=true)
+     */
+    private $pouvoir;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkedin", type="string", length=255, nullable=true)
+     */
+    private $linkedin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="relationcommerciale", type="string", length=255, nullable=true)
+     */
+    private $relationcommerciale;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="projetlist", type="string", length=255, nullable=true)
+     */
+    private $projetlist;
+
+
+    public function __construct(User $user, Marque $marque)
+    {
+        $this->user = $user;
+        $this->marque = $marque;
+    }
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set civilite
+     *
+     * @param string $civilite
+     *
+     * @return Contact
+     */
+    public function setCivilite($civilite)
+    {
+        $this->civilite = $civilite;
+
+        return $this;
+    }
+
+    /**
+     * Get civilite
+     *
+     * @return string
+     */
+    public function getCivilite()
+    {
+        return $this->civilite;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Contact
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     *
+     * @return Contact
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Contact
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set tel
+     *
+     * @param string $tel
+     *
+     * @return Contact
+     */
+    public function setTel($tel)
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    /**
+     * Get tel
+     *
+     * @return string
+     */
+    public function getTel()
+    {
+        return $this->tel;
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param string $mobile
+     *
+     * @return Contact
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+
+    /**
+     * Set fax
+     *
+     * @param string $fax
+     *
+     * @return Contact
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+
+        return $this;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param string $statut
+     *
+     * @return Contact
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return string
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    /**
+     * Set fonction
+     *
+     * @param string $fonction
+     *
+     * @return Contact
+     */
+    public function setFonction($fonction)
+    {
+        $this->fonction = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * Get fonction
+     *
+     * @return string
+     */
+    public function getFonction()
+    {
+        return $this->fonction;
+    }
+
+    /**
+     * Set service
+     *
+     * @param string $service
+     *
+     * @return Contact
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return string
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * Set pouvoir
+     *
+     * @param string $pouvoir
+     *
+     * @return Contact
+     */
+    public function setPouvoir($pouvoir)
+    {
+        $this->pouvoir = $pouvoir;
+
+        return $this;
+    }
+
+    /**
+     * Get pouvoir
+     *
+     * @return string
+     */
+    public function getPouvoir()
+    {
+        return $this->pouvoir;
+    }
+
+    /**
+     * Set linkedin
+     *
+     * @param string $linkedin
+     *
+     * @return Contact
+     */
+    public function setLinkedin($linkedin)
+    {
+        $this->linkedin = $linkedin;
+
+        return $this;
+    }
+
+    /**
+     * Get linkedin
+     *
+     * @return string
+     */
+    public function getLinkedin()
+    {
+        return $this->linkedin;
+    }
+
+    /**
+     * Set relationcommerciale
+     *
+     * @param string $relationcommerciale
+     *
+     * @return Contact
+     */
+    public function setRelationcommerciale($relationcommerciale)
+    {
+        $this->relationcommerciale = $relationcommerciale;
+
+        return $this;
+    }
+
+    /**
+     * Get relationcommerciale
+     *
+     * @return string
+     */
+    public function getRelationcommerciale()
+    {
+        return $this->relationcommerciale;
+    }
+
+    /**
+     * Set typecontact
+     *
+     * @param string $typecontact
+     *
+     * @return Contact
+     */
+    public function setTypecontact($typecontact)
+    {
+        $this->typecontact = $typecontact;
+
+        return $this;
+    }
+
+    /**
+     * Get typecontact
+     *
+     * @return string
+     */
+    public function getTypecontact()
+    {
+        return $this->typecontact;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \R9\UserBundle\Entity\User $user
+     *
+     * @return Contact
+     */
+    public function setUser(\R9\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \R9\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set marque
+     *
+     * @param \R9\InbizzBundle\Entity\Marque $marque
+     *
+     * @return Contact
+     */
+    public function setMarque(\R9\InbizzBundle\Entity\Marque $marque)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque
+     *
+     * @return \R9\InbizzBundle\Entity\Marque
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
+
+    /**
+     * Add projet
+     *
+     * @param \R9\InbizzBundle\Entity\Contactprojet $projet
+     *
+     * @return Contact
+     */
+    public function addProjet(\R9\InbizzBundle\Entity\Contactprojet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \R9\InbizzBundle\Entity\Contactprojet $projet
+     */
+    public function removeProjet(\R9\InbizzBundle\Entity\Contactprojet $projet)
+    {
+        $this->projets->removeElement($projet);
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjets()
+    {
+        return $this->projets;
+    }
+}

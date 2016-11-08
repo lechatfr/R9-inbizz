@@ -1,0 +1,130 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+
+framework:
+    #esi:             ~
+    translator:    ~ #  { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+# FOS user configuration
+fos_user:
+    db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
+    firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
+    user_class:    R9\UserBundle\Entity\User # La classe de l'entité User que nous utilisons
+    registration:
+        form:
+            type: R9\UserBundle\Form\RegistrationType    
+
+# hwi_oauth
+hwi_oauth:
+    # configuration of oauth resource owners to use
+    resource_owners:
+        google:
+            type:                google
+            client_id:           "%google_client_id%"
+            client_secret:       "%google_client_secret%"
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            # user_response_class: \R9\CoreBundle\Controller\Core
+
+    # list of firewall names the oauth bundle is active in
+    firewall_names: [main]
+
+    # optional target_path_parameter to provide an explicit return URL
+    #target_path_parameter: _destination
+
+    # use referer as fallback to determine default return URL
+    #use_referer: true
+
+    # optional FOSUserBundle integration
+    fosub:
+        # try 30 times to check if a username is available (foo, foo1, foo2 etc)
+        username_iterations: 30
+
+        # mapping between resource owners (see below) and properties
+        properties:
+        #    github: githubId
+            google: googleId
+        #    facebook: facebookId
+        #    my_custom_provider: customId
+
+    # if you want to use 'connect' and do not use the FOSUB integration, configure these separately
+    connect: ~
+#        confirmation: true # should show confirmation page or not
+#        registration_form_handler: my_registration_form_handler
+#        registration_form: fos_user.registration.form
+#        account_connector: r9.oauth.user_provider # can be the same as your user provider
+
+    # optional HTTP Client configuration
+    http_client:
+        timeout:       5
+        verify_peer:   true
+        ignore_errors: true
+        max_redirects: 5
+
+    # allows to switch templating engine for bundle views
+    #templating_engine: "php"
+
+
+
+    

@@ -1,0 +1,76 @@
+r9_inbizz_recherche:
+    path:     /recherche
+    defaults: 
+        _controller: R9InbizzBundle:Recherche:index
+    
+r9_inbizz_autocomplete:
+    path:     /autocomplete
+    defaults: 
+        _controller: R9InbizzBundle:Recherche:autocomplete
+    
+r9_inbizz_profil:
+    path:     /profil
+    defaults: 
+        _controller: R9InbizzBundle:Profil:index
+    
+r9_inbizz_profil_view:
+    path:     /profil/{usermail}
+    defaults: 
+        _controller: R9InbizzBundle:Profil:view
+    
+r9_inbizz_marque_create:
+    path:     /marque
+    defaults: 
+        _controller: R9InbizzBundle:Marque:create
+
+r9_inbizz_marque_view:
+    path:     /marque/{marqueid}
+    defaults: 
+        _controller: R9InbizzBundle:Marque:view
+    requirements:
+        marqueid: \d+
+
+r9_inbizz_contact_create:
+    path:     /contact
+    defaults: 
+        _controller: R9InbizzBundle:Contact:create
+
+r9_inbizz_contact_acheteur_insert:
+    path:     /contactacheteur/insert/{marqueid}
+    defaults: 
+        _controller: R9InbizzBundle:Contact:insertacheteur
+    requirements:
+        marqueid: \d+
+
+r9_inbizz_contact_marque_insert:
+    path:     /contactmarque/insert/{marqueid}
+    defaults: 
+        _controller: R9InbizzBundle:Contact:insertmarque
+    requirements:
+        marqueid: \d+
+
+r9_inbizz_contact_allie_insert:
+    path:     /contactallie/insert/{marqueid}
+    defaults: 
+        _controller: R9InbizzBundle:Contact:insertallie
+    requirements:
+        marqueid: \d+
+
+r9_inbizz_contact_update_noid:
+    path:     /contact/update
+    defaults: 
+        _controller: R9InbizzBundle:Contact:update
+
+r9_inbizz_contact_update:
+    path:     /contact/update/{contactid}
+    defaults: 
+        _controller: R9InbizzBundle:Contact:update
+    requirements:
+        contactid: \d+
+
+r9_inbizz_contact_remove:
+    path:     /contact/delete/{contactid}
+    defaults: 
+        _controller: R9InbizzBundle:Contact:remove
+    requirements:
+        contactid: \d+

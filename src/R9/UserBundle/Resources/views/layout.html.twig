@@ -1,0 +1,58 @@
+{# src/R9/UserBundle/Resources/views/layout.html.twig #}
+
+{% extends "R9CoreBundle::layout.html.twig" %}
+
+{% block title %}
+  {{'Identification'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block pagecontent %}
+    <section class="header">
+        <div class="pagetitle">connexion</div>
+    </section>
+    <section class="subheader">
+        <div>
+            Veuillez vous identifier pour consulter l'application R9 Inbizz.
+            <!--Veuillez vous connecter avec votre compte Google pour consulter l'application R9 Inbizz.-->
+        </div>
+    </section>
+        
+{% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        <div class="loginform alert alert-{{ key }}">
+            {{ message|trans({}, 'FOSUserBundle') }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{% if app.request.hasPreviousSession %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+        <div class="loginform flash-{{ type }}">
+        {{ message }}
+        </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}  
+
+<div class="loginform">
+    {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
+    {% block fos_user_content %}
+
+    {% endblock fos_user_content %}
+</div>
+
+<div class="loginform">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+    {% else %}
+    <p>
+        {% for owner in hwi_oauth_resource_owners() %}
+            <a href="{{ hwi_oauth_login_url(owner) }}" class="btn gris">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
+        {% endfor %}
+    </p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

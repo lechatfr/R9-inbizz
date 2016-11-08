@@ -1,0 +1,72 @@
+{% extends "R9CoreBundle::layout.html.twig" %}
+{% block title %}
+  {{'Recherche'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block pagecontent %}
+<section class="header">
+    <!--div class="btnico icoback actback"><a href="#"></a></div-->
+    {% set var1 = marques|length %}
+    {% set var2 = formcontacts|length %}
+    <div class="pagetitle"><span class="grey">{{ var1 + var2 }}</span> résultats pour votre <br class="mob-nobr">recherche.</div>
+</section>
+<!-- si pas de résultat -->
+{% if var1 == 0 and var2 == 0 %}
+    <section class="subheader">
+        <div>
+            <form action="{{ path('r9_inbizz_marque_create') }}">
+                <div class="flex-grid hcenter vcenter ccenter spadding">
+                    <div class="col100">
+                        <p class="ta-center">Votre recherche n'a donné aucun résultat. Vous pouvez soit réeffectuer celle-ci ou</p>
+                    </div>
+                    <div class="mob-col100">
+                        <div class="btninnerico rouge ajouter actCreateMarque" title="Ajouter une marque">Ajouter une marque</div>
+                    </div>
+                    <div class="mob-col100">ou</div>
+                    <div class="mob-col100">
+                        <div class="styled-select nomargin" style="margin-top:9px"><select name="marques" class="actMarque">
+                        <option value="">Pour ajouter un contact sélectionnez une marque</option>
+                            {% for marque in allmarques %}
+                            <option value="{{ marque.id }}">{{ marque.nom }}</option> 
+                            {% endfor %}
+                        </select></div>
+                    </div>
+                    <div class="mob-col100">
+                        <div class="btninnerico blanc ajouter actCreateContact" title="Ajouter un contact">Ajouter un contact</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% else %}
+    <!-- si x résultats -->
+    <div class="accordeon open">
+        <div><span class="grey">{{ marques|length }}</span> Résultats de marques.</div>
+        <div>
+            <section class="marquelist">
+                {% for marque in marques %}
+                    {{ include("R9InbizzBundle:Marque:marqueheader.html.twig") }}
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+    <div class="accordeon">
+        <div><span class="grey">{{ formcontacts|length }}</span> Résultats de contacts.</div>
+        <div>
+            <section class="marquecontact">
+                {% for formcontact in formcontacts %}
+                    {% if formcontact[0].typecontact is sameas('acheteur') %}
+                        {{ include("R9InbizzBundle:Contact:acheteurform.html.twig") }}
+                    {% endif %}
+                    {% if formcontact[0].typecontact is sameas('marque') %}
+                        {{ include("R9InbizzBundle:Contact:marqueform.html.twig") }}
+                    {% endif %}
+                    {% if formcontact[0].typecontact is sameas('allie') %}
+                        {{ include("R9InbizzBundle:Contact:allieform.html.twig") }}
+                    {% endif %}
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

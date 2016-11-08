@@ -1,0 +1,3 @@
+r9_core_homepage:
+    path:     /
+    defaults: { _controller: R9CoreBundle:Core:index }

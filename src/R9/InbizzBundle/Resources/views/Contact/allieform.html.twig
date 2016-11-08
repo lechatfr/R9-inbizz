@@ -1,0 +1,109 @@
+{% if resultlist is defined %}
+    <div class="contactitem resultlist">
+{% else %}
+    {% if loop is defined %}
+        {% if loop.index0 is sameas(0) and formcontact[0].id > 0 and formcontact[0].user is same as(app.user) %}
+           <div class="contactitem proprietaire">
+        {% elseif loop.index0 is sameas(0) and formcontact[0].id > 0 %}
+           <div class="contactitem">
+        {% elseif loop.index0 is sameas(0) %}
+            <div class="contactmodele">
+        {% else %}
+            <div class="contactitem">
+        {% endif %}
+    {% elseif formcontact[0].user is same as(app.user) %}
+        <div class="contactitem proprietaire">
+    {% else %}
+        <div class="contactitem">
+    {% endif %}
+{% endif %}
+    {{ form_start(formcontact[2], {'attr': {'class': ''}}) }}
+        <div class="sectionflex">
+            <div class="detail">
+
+                <div class="flex-grid">
+                    <div class="col100">
+                        <div class="flex-grid nowrap vcenter">
+                            <div class="colcondensed mob-col100">
+                                {% set imgavatar = 'bundles/r9core/images/photo.png' %}
+                                {% if formcontact[0].user.image %}
+                                    {% if formcontact[0].user.image.url != '' %}
+                                        {% set imgavatar = formcontact[0].user.image.webPath %}
+                                    {% endif %}
+                                {% endif %}
+                                <div class="avatar"><img class="photo" src="{{ asset(imgavatar) }}"></div>
+                            </div>
+                            <div class="colexpanded mob-col100">
+                                <div class="flex-grid">
+                                    <div class="col100 mob-colcenter">
+                                        <div class="profilprenom">{{ formcontact[0].user.prenom }}</div>
+                                        <div class="profilnom">{{ formcontact[0].user.nom }}</div>
+                                        <div class="profilagence">{{ formcontact[0].user.agence }}</div>
+                                    </div>
+                                    <div class="col100">
+                                        <div class="noico">
+                                            {{ form_widget(formcontact[2].relationcommerciale, {'attr': {'placeholder': 'Ancienneté de la relation commerciale'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col100 infocontact infoconnaissance">
+                        <div class="flex-grid  vcenter">
+                            <div class="colcondensed mob-colcenter">
+                                <div class="projet">Connaissances sectorielle</div>
+                            </div>
+                            <div class="colexpanded">
+                                <input type="text" name="connaissance-sectioriel" value="{{ formcontact[0].user.connaissancessectorielles }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col100 infocontact infocompetence">
+                        <div class="flex-grid  vcenter">
+                            <div class="colcondensed mob-colcenter">
+                                <div class="projet">Compétences métier</div>
+                            </div>
+                            <div class="colexpanded">
+                                <input type="text" name="competences-metier" value="{{ formcontact[0].user.competencesmetier }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col100 infocontact infoprojet">
+                        <div class="flex-grid  vcenter">
+                            <div class="colcondensed mob-colcenter">
+                                <div class="projet">Projet réalisé</div>
+                            </div>
+                            <div class="colexpanded">
+                                <div class="flex-grid">
+                                    <div class="col100">
+                                        {#{ form_widget(formcontact[2].projets) }#}
+                                        {% for child in formcontact[2].projets %}
+                                        <div class="noico inline-block">
+                                            {{ form_widget(child) }}
+                                            {{ form_label(child) }}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tools">
+                <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                <div class="btnico icolinkbl" title="Voir le profil">
+                    {% if formcontact[0].marque.id > 0 %}
+                    <a href="{{ path('r9_inbizz_profil_view', {'usermail': formcontact[0].user.email}) }}"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {{ form_rest(formcontact[2]) }}
+    {{ form_end(formcontact[2]) }}
+    <div class="submitmsg"></div>
+</div>

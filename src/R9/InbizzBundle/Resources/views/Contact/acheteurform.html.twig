@@ -1,0 +1,76 @@
+{% if resultlist is defined %}
+    <div class="contactitem resultlist">
+{% else %}
+    {% if loop is defined %}
+        {% if loop.index0 is sameas(0) %}
+            <div class="contactmodele">
+        {% elseif formcontact[0].user is same as(app.user) %}
+           <div class="contactitem proprietaire">
+        {% else %}
+            <div class="contactitem">
+        {% endif %}
+    {% elseif formcontact[0].user is same as(app.user) %}
+        <div class="contactitem proprietaire">
+    {% else %}
+        <div class="contactitem">
+    {% endif %}
+{% endif %}
+    {{ form_start(formcontact[2], {'attr': {'class': ''}}) }}
+        <div class="sectionflex">
+            <div class="detail">
+
+                <div class="flex-grid">
+                    <div class="col33 mob-col100">
+                        <div class="styled-select">
+                            {{ form_widget(formcontact[2].civilite) }}
+                        </div>
+                    </div>
+                    <div class="col33 mob-col100">
+                        <div class="noico">
+                            {{ form_widget(formcontact[2].nom, {'attr': {'placeholder': 'Nom'}}) }}
+                        </div>
+                    </div>
+                    <div class="col33 mob-col100">
+                        <div class="noico">
+                            {{ form_widget(formcontact[2].prenom, {'attr': {'placeholder': 'Prénom'}}) }}
+                        </div>
+                    </div>
+                    <div class="col100">
+                        <div class="preico icoemail">
+                            {{ form_widget(formcontact[2].email, {'attr': {'placeholder': 'E-mail'}}) }}
+                        </div>
+                    </div>
+                    <div class="col33 mob-col100">
+                        <div class="preico icoblank">
+                            {{ form_widget(formcontact[2].tel, {'attr': {'placeholder': 'Tel fixe'}}) }}
+                        </div>
+                    </div>
+                    <div class="col33 mob-col100">
+                        <div class="preico icotel">
+                            {{ form_widget(formcontact[2].mobile, {'attr': {'placeholder': 'Tel mobile'}}) }}
+                        </div>
+                    </div>
+                    <div class="col33 mob-col100">
+                        <div class="preico icofax">
+                            {{ form_widget(formcontact[2].fax, {'attr': {'placeholder': 'Fax'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tools">
+                <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                <div class="btnico icolinkbl" title="Voir la marque">
+                    {% if formcontact[0].marque.id > 0 %}
+                    <a href="{{ path('r9_inbizz_marque_view', {'marqueid': formcontact[0].marque.id}) }}"></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {{ form_rest(formcontact[2]) }}
+    {{ form_end(formcontact[2]) }}
+    <div class="submitmsg"></div>
+</div>

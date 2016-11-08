@@ -1,0 +1,4 @@
+services:
+#    r9_inbizz.contactlist:
+#        class: R9\InbizzBundle\Contactlist\R9Contactlist
+#        arguments: ["@service_id", "plain_value", %parameter%]

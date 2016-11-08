@@ -1,0 +1,25 @@
+<header role="banner" class="page-header-wrapper">
+    <div class="site-content header-content">
+        <div class="logo">
+            <a href="{{ path('r9_core_homepage') }}"><img src="{{ asset('bundles/r9core/images/R9-logo.png') }}"></a>
+        </div>
+        <div class="rechercherform">
+            <form class="searchform" action="{{ path('r9_inbizz_recherche') }}" method="get">
+                <div class="rechercher">
+                    <div class="fieldholder"><input class="searchfield" name="q" type="text" value=""></div>
+                    <div class="btnico icorecherche fieldholder actsearch"></div>
+                </div>
+            </form>
+        </div>
+        <div class="menu">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+{{'Connecté en tant que '|trans }}{{ app.user.username }}
+        <br>
+        <a href="{{ path('fos_user_security_logout') }}">{{'Déconnexion'|trans }}</a>
+{% else %}
+        <a href="{{ path('fos_user_security_login') }}">{{'Connexion'|trans }}</a>
+{% endif %}
+            <div class="btnico icoprofil"><a href="{{ path('r9_inbizz_profil') }}"></a></div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,140 @@
+{% extends "R9CoreBundle::layout.html.twig" %}
+{% block title %}
+  {{'Marque'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block pagecontent %}
+<section class="header">
+    <div class="btnico icoback actback"><a href="#"></a></div>
+    <div class="pagetitle">
+        {% if marque.nom is not null %}
+            DÉTAILS DE {{ marque.nom }}
+        {% else %}
+            Création de marque
+        {% endif %}
+    </div>
+</section>
+<!-- 
+section marquedetail, 
+ajouter class "creation" pour obtenir le masque de création, aucun contactitem à la création de marque
+ajouter class "proprietaire" pour obtenir le masque d'édition -->
+<section class="marquedetail {{ classmode }}">
+    {{ form_start(form, {'attr': {'class': ''}}) }}
+        <div class="marqueitemfixedholder">
+            {{ include("R9InbizzBundle:Marque:marqueheader.html.twig") }}
+        </div>
+        <div class="marquedatas">
+            <div class="accordeon open">
+                <div>Informations marque.</div>
+                <div>
+                    <div class="flex-grid">
+                        <div class="col100"><span class="form-section">Type marque</span></div>
+                        <div class="col50 mob-col100">
+                            <div class="profilinfo preico icoetiquette">
+                                <div class="styled-select">
+                                {{ form_widget(form.type, {'attr': {'placeholder': 'Type de marque'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col50 mob-col100">
+                            <div class="profilinfo preico icochimie">
+                                <div class="styled-select">
+                                {{ form_widget(form.secteurdactivite, {'attr': {'placeholder': 'Secteur d\'activité'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col50 mob-col100">
+                            <div class="profilinfo preico icoccard">
+                                {{ form_widget(form.chiffredaffaire, {'attr': {'placeholder': 'Chiffre d\'affaire'}}) }}
+                            </div>
+                        </div>
+                        <div class="col50 mob-col100">
+                            <div class="profilinfo preico icogroupe">
+                                {{ form_widget(form.nombredesalarie, {'attr': {'placeholder': 'Nombre de salarié'}}) }}
+                            </div>
+                        </div>
+                        <div class="col100"><span class="form-section">Adresse du siège</span></div>
+                        <div class="col100">
+                            {{ form_widget(form.adresse, {'attr': {'placeholder': 'Adresse'}}) }}
+                        </div>
+                        <div class="col100">
+                            {{ form_widget(form.adressecomplement, {'attr': {'placeholder': 'Complément d\'adresse'}}) }}
+                        </div>
+                        <div class="col25 mob-col100">
+                            {{ form_widget(form.codepostal, {'attr': {'placeholder': 'Code postal'}}) }}
+                        </div>
+                        <div class="col25 mob-col100">
+                            {{ form_widget(form.ville, {'attr': {'placeholder': 'Ville'}}) }}
+                        </div>
+                        <div class="col25 mob-col100">
+                            {{ form_widget(form.pays, {'attr': {'placeholder': 'Pays'}}) }}
+                        </div>
+                        <div class="col100"><span class="form-section">Web</span></div>
+                        <div class="col100">
+                            <div class="profilinfo preico icoweb">
+                                {{ form_widget(form.web, {'attr': {'placeholder': 'Adresse site'}}) }}
+                            </div>
+                        </div>
+                        <div class="col100">
+                            <div class="profilinfo preico icotwitter">
+                                {{ form_widget(form.twitter, {'attr': {'placeholder': 'Adresse Twitter'}}) }}
+                            </div>
+                        </div>
+                        <div class="col100">
+                            <div class="profilinfo preico icofacebook">
+                                {{ form_widget(form.facebook, {'attr': {'placeholder': 'Adresse Facebook'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_rest(form) }}
+        {{ form_end(form) }}
+    <div class="submitmsg"></div>
+</section>
+<section class="marquecontact marquecontactacheteur">
+    <div>
+        <div class="accordeon">
+            <div>Contacts acheteurs.
+            </div>
+            <div>
+                {% for formcontact in formcontactsacheteur %}
+                    {{ include("R9InbizzBundle:Contact:acheteurform.html.twig") }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="marquecontact marquecontactmarque">
+    <div>
+        <div class="accordeon">
+            <div>Contacts marque.
+            </div>
+            <div>
+                {% for formcontact in formcontactsmarque %}
+                    {{ include("R9InbizzBundle:Contact:marqueform.html.twig") }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="marquecontact marquecontactallie">
+    <div>
+        <div class="accordeon">
+            <div>Alliés R9.
+            </div>
+            <div>
+                {% for formcontact in formcontactsallie %}
+                    {{ include("R9InbizzBundle:Contact:allieform.html.twig") }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block pagefooterbutton %}
+<div class="btninnerico gris annuler invisible actannuler" title="Annuler les modifications">Annuler</div>
+<div class="btninnerico blanc valider invisible actvalider" title="Valider les modifications">Valider les modifications</div>
+{% endblock %}

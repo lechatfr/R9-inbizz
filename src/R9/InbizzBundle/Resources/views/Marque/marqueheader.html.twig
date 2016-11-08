@@ -1,0 +1,46 @@
+{% if marque.id > 0%}
+{% set urlmarque = path('r9_inbizz_marque_view', {'marqueid': marque.id}) %}
+{% else %}
+{% set urlmarque = '#' %}
+{% endif %}
+<div class="marqueitem">
+    <div class="marquelogo">
+        <a href="{{ urlmarque }}"><img src="{% if marque.image.url != '' %}
+            {{ asset(marque.image.webPath) }}
+            {% endif %}"></a>
+    </div>
+    <div class="marqueinfo">
+        <div class="marquenom"><a href="{{ urlmarque }}">{{ marque.nom }}<sup>{{ marque.marquestatut.nom }}</sup></a></div>
+        {% if marque.marqueetat.valeur is sameas('actif') %}
+           <div class="marquestatut actif"></div>
+        {% elseif marque.marqueetat.valeur is sameas('inbizz') %}
+            <div class="marquestatut inbizz"></div>
+        {% else %}
+            <div class="marquestatut"></div>
+        {% endif %}
+    </div>
+    {% if form is defined %}
+    <div class="marqueform">
+        <label class="btnuploadimg" for="marque_image_file">
+        <img id="imgfilepreview" src="{% if marque.image.url != '' %}
+            {{ asset(marque.image.webPath) }}
+            {% endif %}" data-reset="">
+        <div class="uploadimg"><div class="btnico icoimg"></div></div>
+    </label>
+        {{ form_widget(form.image.file) }}
+        <!--input type="submit"-->
+        {{ form_widget(form.nom, {'attr': {'placeholder': 'Nom de la marque (obligatoire)', 'disabled': ''}}) }}
+        <div>
+            <div class="styled-select">
+                {{ form_widget(form.marquestatut) }}
+            </div>
+        </div>
+        <div></div>
+        <div>
+            <div class="styled-select">
+                {{ form_widget(form.marqueetat) }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,113 @@
+{% extends "R9CoreBundle::layout.html.twig" %}
+{% block title %}
+  {{'Profil'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block pagecontent %}
+<section class="header">
+    {% if user is same as(app.user) %}
+    <div class="pagetitle">
+        Mon Profil R9.
+    </div>
+    {% else %}
+    <div class="btnico icoback actback"><a href="#"></a></div>
+    <div class="pagetitle">
+        Profil de {{ user.prenom }} {{ user.nom }}
+    </div>
+    {% endif %}
+</section>
+<!-- 
+section profildetail, 
+ajouter class "proprietaire" pour obtenir le masque d'édition -->
+    {{ form_start(formprofil, {'attr': {'class': ''}}) }}
+<section class="profildetail sectionflex {{ classmode }}">
+    {% set imgavatar = 'bundles/r9core/images/photo.png' %}
+    {% if user.image %}
+        {% if user.image.url != '' %}
+            {% set imgavatar = user.image.webPath %}
+        {% endif %}
+    {% endif %}
+    <div class="avatar">
+        {% if classmode %}
+        <label class="btnuploadimg" for="user_image_file">
+        {% endif %}
+            <img class="photo"  id="imgfilepreview" src="{{ asset(imgavatar) }}" data-reset="">
+        {% if classmode %}
+        </label>
+        {% endif %}
+        {{ form_widget(formprofil.image.file) }}
+    </div>
+    <div class="detail">
+        <div class="detailup">
+            <div class="detailleft">
+                <div class="profilprenom">{{ user.prenom }}</div>
+                <div class="profilnom">{{ user.nom }}</div>
+                <div class="profilagence">{{ user.agence }}</div>
+            </div>
+            <div class="detailright">
+                <div class="profilinfo preico icofacebook">
+                    <a href="{{ user.facebook }}">{{ user.facebook }}</a>
+                </div>
+                <div class="profilinfo preico icotel">
+                    {{ form_widget(formprofil.tel) }}
+                </div>
+                <div class="profilinfo preico icoemail">
+                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                </div>
+            </div>
+        </div>
+        {% set displaythis = 'displaynone' %}
+        {% if classmode %}
+            {% if not user.agence or not user.facebook %}
+                {% set displaythis = '' %}
+            {% endif %}
+        {% endif %}
+        <div class="detaildown {{ displaythis }}">
+            <div class="detailleft"></div>
+            <div class="detailright">
+                Veuillez compléter les champs suivants
+            </div>
+            <div class="detailleft">agence</div>
+            <div class="detailright">
+                {{ form_widget(formprofil.agence) }}
+            </div>
+            <div class="detailleft">facebook</div>
+            <div class="detailright">
+                {{ form_widget(formprofil.facebook) }}
+            </div>
+        </div>
+        <div class="detaildown">
+            <div class="detailleft">Connaissances sectorielles</div>
+            <div class="detailright">
+                {{ form_widget(formprofil.connaissancessectorielles) }}
+            </div>
+            <div class="detailleft">Compétences métier</div>
+            <div class="detailright">
+                {{ form_widget(formprofil.competencesmetier) }}
+            </div>
+            <div class="detailleft">Intérêts</div>
+            <div class="detailright">
+                {{ form_widget(formprofil.interets) }}
+            </div>
+        </div>
+    </div>
+    <div class="tools">
+        <div class="btnico icovalidbl actvalidprofil" title="Valider les modifications"></div>
+        <div class="btnico icocancelbl actcancelprofil" title="Annuler les modifications"></div>
+    </div>
+    <div class="submitmsg"></div>
+</section>
+    {{ form_rest(formprofil) }}
+    {{ form_end(formprofil) }}
+<section class="subheader">
+    <div>
+        <div class="pagesubtitle">marques et contacts.</div>
+        Pour ajouter une marque, merci d'effectuer d'abord une recherche afin de vérifier que celle-ci n'existe pas déjà
+    </div>
+</section>
+<section class="marquelist">
+    {% for marque in marques %}
+        {{ include("R9InbizzBundle:Marque:marqueheader.html.twig") }}
+    {% endfor %}
+</section>
+{% endblock %}

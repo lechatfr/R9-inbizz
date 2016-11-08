@@ -1,0 +1,10 @@
+{% if formtype is sameas('acheteur') %}
+    {{ include("R9InbizzBundle:Contact:acheteurform.html.twig") }}
+{% endif %}
+{% if formtype is sameas('marque') %}
+    {{ include("R9InbizzBundle:Contact:marqueform.html.twig") }}
+{% endif %}
+{% if formtype is sameas('allie') %}
+    {{ include("R9InbizzBundle:Contact:allieform.html.twig") }}
+{% endif %}
+                

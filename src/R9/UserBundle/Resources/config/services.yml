@@ -1,0 +1,12 @@
+parameters:
+  r9.oauth.user_provider.class: R9\UserBundle\Security\Core\User\FOSUBUserProvider
+  r9.session_manager.class: R9\UserBundle\Services\SessionManager
+
+services:
+  r9.oauth.user_provider:
+    class: %r9.oauth.user_provider.class%
+    arguments: ["@fos_user.user_manager",{google: googleId}]
+  r9.session_manager:
+    class: %r9.session_manager.class%
+    arguments: ["@session",session]
+      

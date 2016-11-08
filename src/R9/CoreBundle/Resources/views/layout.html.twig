@@ -1,0 +1,68 @@
+{# src/R9/CoreBundle/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html class="no-js" lang="fr" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}R9 Inbizz{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1" id="viewport-meta" />
+    <link rel="icon" href="favicon.ico" />
+    {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/r9core/css/app.css') }}" />
+    {% endblock %}
+</head>
+<body>
+    <div class="global-wrapper">
+        {% block pageheader %}
+        {#{ render(controller("R9CoreBundle:Core:header")) }#}
+        <header role="banner" class="page-header-wrapper">
+            <div class="site-content header-content">
+                <div class="logo">
+                    <a href="{{ path('r9_core_homepage') }}"><img src="{{ asset('bundles/r9core/images/R9-logo.png') }}"></a>
+                </div>
+                <div class="rechercherform">
+                    <form class="searchform" action="{{ path('r9_inbizz_recherche') }}" method="get">
+                        <div class="rechercher">
+                            <div class="fieldholder autocompletefield"><input class="searchfield" id="searchfield" name="q" type="text" value="{% if search is defined %}{{ search }}{% endif %}"></div>
+                            <div class="btnico icorecherche fieldholder actsearch"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="menu">
+                    {% set connectname = '' %}
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {% set connectname = 'Connecté en tant que '|trans ~ app.user.username %}
+                            <a href="{{ path('fos_user_security_logout') }}" class="logout">{{'Déconnexion'|trans }}</a>
+                    {% endif %}
+                    <div class="btnico icoprofil"><a href="{{ path('r9_inbizz_profil') }}" title="{{ connectname }}"></a></div>
+                </div>
+            </div>
+        </header>
+        {% endblock %}
+        <main class="page-content-wrapper" role="main">
+            <div class="site-content">
+                {% block pagecontent %}
+                {% endblock %}
+            </div>
+        </main>
+        {% block pagefooter %}
+        <footer role="contentinfo" class="page-footer-wrapper">
+            <div class="site-content footer-content">
+                {% block pagefooterbutton %}
+                {% endblock pagefooterbutton %}
+            </div>
+        </footer>
+        {% endblock %}
+    </div>
+    {% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.jQuery || document.write('<script type="text/javascript" src="{{ asset('bundles/r9core/js/fallbacks/jquery.min.js') }}">\x3C/script>');
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/r9core/js/scripts.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/r9core/js/fallbacks/jquery-ui.min.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

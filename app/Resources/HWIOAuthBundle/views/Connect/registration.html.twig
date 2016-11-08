@@ -1,0 +1,24 @@
+{% extends "R9CoreBundle::layout.html.twig" %}
+
+{% block pagecontent %}
+<div class="loginform">    
+    <h3>{{ 'header.register' | trans({'%name%': userInformation.realName}, 'HWIOAuthBundle') }}</h3>
+    <div class="row">
+        <div class="span6">
+            {{ form_start(form, {'action': path('hwi_oauth_connect_registration', {'key': key}), 'attr': {'class': 'hwi_oauth_registration_register'}}) }}
+                {{ form_widget(form) }}
+                <div>
+                    <button type="submit" class="btn btn-primary">{{ 'connect.registration.submit'|trans({}, 'HWIOAuthBundle') }}</button>
+                    <a href="{{ path('fos_user_security_login') }}" class="btn">{{ 'connect.registration.cancel' | trans({}, 'HWIOAuthBundle') }}</a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="span6">
+            {% if userInformation.profilePicture is not empty %}
+                <img src="{{ userInformation.profilePicture }}" />
+            {% endif %}
+        </div>
+    </div>
+</div>
+{{ dump(form) }}
+{% endblock pagecontent %}
